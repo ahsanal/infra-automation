@@ -1,0 +1,121 @@
+---
+# sample inventory file in YAML format
+
+all:
+  hosts:
+    server1.example.com:
+  children:
+    appservers:
+      hosts:
+        app1.example.com:
+        app2.example.com:
+    webservers:
+      hosts:
+        web1.example.com:
+        web2.example.com:
+        web3.example.com:
+    dbservers:
+        db1.example.com:
+        db2.example.com:
+        db3.example.com:
+
+# default inventory file in ansible
+# /etc/ansible/hosts
+
+# inventory file can be created using YAML or INI format.
+# it can be placed anywhere.
+
+# GROUPS IN ANSIBLE
+
+# there are 2 default groups in ansilbe:
+# 1) all
+# 2) ungrouped
+# every host will always belongs to at least 2 groups (all or ungrouped), (all and ungrouped), (all or/and other groups).
+
+# Putting same hosts in multiple groups 
+
+---
+# Inventory file contains example of putting the same hosts in multiple groups
+# consider you have different vsphere cluster or data center based on your application like login,payment,dashboard hosts and you want to run the play base on your application as well as cluster/datacenter.
+
+all:
+  hosts:
+    server1.example.com:
+  children:
+    appservers:
+      hosts:
+        app1.example.com:
+        app2.example.com:
+    webservers:
+      hosts:
+        web1.example.com:
+        web2.example.com:
+        web3.example.com:
+    dbservers:
+        db1.example.com:
+        db2.example.com:
+        db3.example.com:
+    logincluster:
+        app1.example.com:
+        web1.example.com:
+        db1.example.com:
+    paymentcluster:
+        app2.example.com:
+        web2.example.com:
+        db2.example.com:
+
+# you can create the hosts based on datacenter or region also.
+
+---
+# sample file for grouping esxi hosts based on datacenter and clusters.
+
+all:
+  hosts:
+    esxi1.example.com:
+  children:
+    proddatacenter:
+      hosts:
+        server11.example.com:
+        server12.example.com:
+        server13.example.com:
+    devdatacenter:
+      hosts:
+        server21.example.com:
+        server22.example.com:
+        server23.example.com:
+    testdatacenter:
+      hosts:
+        server31.example.com:
+        server32.example.com:
+        server33.example.com:
+    apac:
+      children:
+        proddatacenter:
+    emea:
+      children:
+        devdatacenter:
+
+---
+# Sample inventory file base on hosts range.
+
+# Lets you have large number of server and you dont want to add them manually. Here you can take the advantage of range functionality.
+
+# INI Format 
+ 
+[dnsservers]
+dns[1-20].example.com
+apac1[a:g].example.com
+
+[webservers]
+web[1-10].example.com
+www[a:e].example.com
+
+[dbservers]
+db[1-5].example.com
+devdb[a:d].example.com
+
+# YAML Format
+---
+- webservers:
+  host:
+    web[1-20].example.com
