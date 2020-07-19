@@ -119,3 +119,57 @@ devdb[a:d].example.com
 - webservers:
   host:
     web[1-20].example.com
+
+# ADDING VARIABLE TO INVENTORY
+
+# let you wamt to store the some value specific to your hosts. you can do that using the adding the variable to the inventory. This will helpful when you have different variables for different hosts.
+
+# scenarios like storing the credentials for the different hosts, environment variable, any kind of key-value pair data.
+
+# INI Format
+
+[webservers]
+web1.example.com http_port=8443 WEB=/home/ubuntu/web1
+web2.example.com http_port=443 WEB=/home/ubuntu/web2
+
+
+# YAML Format
+---
+webservers:
+  web1.example.com:
+    http_port:  8443
+    WEB:  /home/ubuntu/web1
+  web2.example.com:
+    http_port:  443
+    WEB:  /home/ubuntu/web2
+
+
+# GROUP VARIABLES IN INVENTORY
+
+# let say have variable which will be same for groups of host. For this we can use  group variable concept in inventory.
+
+# scenarios like you have same dns server , ntp server,proxy setting for groups of hosts.
+
+# INI Format
+
+[appservers]
+app1.example.com
+app2.example.com
+
+[appservers:vars]
+dns_server=dns1.example.com
+ntp_server=pool1.ntp.org
+proxy=proxy1.example.com
+
+
+# YAML Format
+---
+appservers
+  hosts:
+    app1.example.com
+    app2.example.com
+  vars:
+    dns_server=dns1.example.com
+    ntp_server=pool1.ntp.org  
+    proxy=proxy1.example.com
+
