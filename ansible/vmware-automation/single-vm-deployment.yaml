@@ -1,0 +1,32 @@
+---
+# single vm deployment from template
+
+name: Deploy vm from template
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    vcenter_hostname: VCENTER_IP        # // Eg: 172.16.16.1
+    vcenter_user: VCENTER_USERNAME      # // Eg: administrator@vsphere.local
+    vcenter_pass: VCENTER_PASSWORD      # // Eg: password
+    esxhost: ESXI_HOST_IP               # // Eg: 172.16.16.2 
+    datastore: DATASTORE_NAME           # // Eg: DS-ESXI-2 
+    folder: FOLDER_NAME                 # // Eg: dev-vm
+    vmtemplate: VMTEMPLATE_NAME         # // Eg: CentOS7-Standard
+    name: "VM-NAME"                     # // Eg: "Web1-Dev-192.168.80.10"
+    notes: SAMPLE_NOTES                 # // Eg: "use default pass"
+    dumpfacts: False
+  tasks:
+    - name: Deploy VM from template
+      vmware_guest:
+        validate_certs: False
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_user }}"
+        password: "{{ vcenter_pass }}"
+        esxi_hostname: "{{ esxhost }}"
+        datacenter: VCENTER_DATACENTER_NAME    # // Eg: example-dev-datacenter
+        folder: FOLDER_PATH                    # // Eg: /webservers
+        name: "{{ name }}"
+        template: "{{ vmtemplate }}"
+        disk:
+          - size_gb: "{{ disk_size | default(50) }}"
