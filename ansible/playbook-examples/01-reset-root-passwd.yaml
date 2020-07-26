@@ -1,0 +1,27 @@
+---
+# Title: Reset the root user password
+# Author: harshiljethava
+# Usage:
+# 1) generate the password hash using below command.
+# mkpasswd -m sha-512
+#
+# 2) Create the ansible vault to store the generated password hash.It will prompt you to create the password for the vaul
+# ansible-vault create /etc/ansible/vault/passwd-vault.yaml
+#
+# 3) save the generated hash as per below format.
+# vault_rootpwd: "GENERATE-HASH"
+#
+# 4) go to the playbook and run the below command.
+# ansible-playbook reset-root-password.yaml -i hosts --ask-vault-pass 
+
+- hosts: all
+  become: yes
+  
+  tasks:
+          - name: Include the var
+            include_vars: /etc/ansible/vault/passwd-vault.yaml
+          - name: Update root password 
+            user: 
+                name: root
+                password: "{{ vault_rootpwd }}"
+                update_password: always 
