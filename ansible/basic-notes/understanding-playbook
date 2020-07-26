@@ -1,0 +1,12 @@
+# Anisble has following main core components :
+	1. Inventory
+	2. Playbook
+	3. Modules
+	4. Plays
+	5. Variable
+	6. Facts
+	7. Configuration Files
+
+## 2. UNDERSTANDING THE PLAYBOOK
+
+# you can consider playbook as policy file or instruction/task file where all the tasks define. it is a ansible`s configuration, deployment and orchestration languague.
