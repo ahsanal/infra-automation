@@ -41,4 +41,8 @@
                     shell: /bin/bash
                     state: present
                     uid: 3030
-
+          - name:  name: delete the ansibleroot user
+            user:
+                    name: ansibleroot
+                    state: absent
+                    remove: yes
