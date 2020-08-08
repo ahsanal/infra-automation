@@ -1,0 +1,43 @@
+---
+# Title: Playbook to change the file & directory permission
+# Author : harshiljethava
+# Usage:
+# ansible-playbook change-permission.yaml -i hosts
+- hosts: test
+  become: yes
+  become_user: root
+  name: Playbook to create the file and change the permission
+  tasks:
+          - name: Create the file /root/ansibletest.conf and give tbe "770" permission
+            file:
+                    path: /root/ansibletest.conf
+                    state: touch
+                    mode: u=rwx,g=rwx
+          - name: Change the ansibletest.conf file permission to "400" permission
+            file:
+                    path: /root/ansibletest.conf
+                    owner: ansibleadmin
+                    group: root
+                    mode: "400"
+          - name: Create the symbolic link of ansibletest.conf to /etc/ansibletest.conf
+            file:
+                    src: /root/ansibletest.conf
+                    dest: /etc/ansibletest.conf
+                    owner: ansibleadmin
+                    group: root
+                    state: link
+          - name: Delete the ansibletest.conf file
+            file:
+                    path: /root/ansibletest.conf
+                    state: absent
+          - name: Create the directory /usr/ansible
+            file:
+                    path: /usr/ansible
+                    state: directory
+                    mode: u=rwx,g=rwx,o=rwx
+          - name: change the directory /usr/ansible permission
+            file:
+                    path: /usr/ansible
+                    state: directory
+                    mode: u=r,g=r,o=r
+
