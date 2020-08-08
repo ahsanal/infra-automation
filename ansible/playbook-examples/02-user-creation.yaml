@@ -1,0 +1,34 @@
+
+---
+# Title: User creation example in linux system
+# Author: harshiljethava
+#
+# Usage:
+# ansible-playbook user-creation.yaml -i hosts
+#
+# Note:
+# Before running the playbook generate the password hash to set the user password. You can use the below ansible command to generate the password hash.
+# ansible all -i localhost, -m debug -a "msg={{ 'YOURPASSWORD' | password_hash('sha512', 'YOURPASSWORD_SALT') }}"
+
+- hosts: test
+  become: yes
+  become_user: root
+  tasks:
+          - name: add 'ansibleadmin' group to remote server
+            group:
+                    name: ansibleadmin
+                    gid: 2020
+                    state: present
+          - name: add 'ansibleadmin' user to remote server
+            user:
+                    name: ansibleadmin
+                    comment: Ansible Admin
+                    uid: 4040
+                    group: ansibleadmin
+                    password: "$6$mysfssdgsgsdoWsfdj.Jz3Y8na9YijQ0KAZf2uPvjrxVJSWRiSwDcBkfI7xGJqQ2Bufcy.GJoIU01XEiEI5pODMs3CMm6dy5a."
+          - name: Generate 1024 bit SSH key for user ansibleadmin
+            user:
+                    name: ansibleadmin
+                    generate_ssh_key: yes
+                    ssh_key_bits: 1024
+                    ssh_key_file: .ssh/id_rsa_ansibleadmin
