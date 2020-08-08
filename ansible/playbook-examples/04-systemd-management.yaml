@@ -1,0 +1,29 @@
+---
+# Title: Playbook to manage the serivces using the systemd
+# Author: harshiljethava
+- hosts: test
+  name: Playbook to manage the service using the systemd
+  tasks:
+          - name: start ssh service
+            systemd:
+                    state: started
+                    name: sshd
+          - name: stop ssh service
+            systemd:
+                    state: stopped
+                    name: sshd
+          - name: restart the ssh service
+            systemd:
+                    state: restarted
+                    name: sshd
+                    enabled: yes
+          - name: stop the firewalld service
+            systemd:
+                   state: stopped
+                   name: firewalld
+          - name: restart & enable firewalld service
+            systemd:
+                   state: restarted
+                   name: firewalld
+                   enabled: yes   
+
