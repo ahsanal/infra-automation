@@ -1,0 +1,19 @@
+---
+# Title: Playbook to send the mail noification
+# Author: harshiljethava
+# - hosts: test
+- hosts: localhost
+  tasks:
+        - name: include vars
+          include_vars: /etc/ansible/vault/mail-credentials.yaml
+        - name: Sending email notification  
+          mail:
+                 host: "{{ vault_smtp }}"
+                 port: 587
+                 username: "{{ vault_from_mail }}"
+                 password: "{{ vault_from_mail_pass }}"
+                 from : "{{ vault_from_mail }}"
+                 to: "{{ vault_to_mail }}"
+                 subject: Mail from ansible playbook
+                 body: You are seeing this mail run from {{ ansible_hostname }} playbook :)
+          delegate_to: localhost
