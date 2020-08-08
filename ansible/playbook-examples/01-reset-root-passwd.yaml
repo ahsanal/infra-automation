@@ -2,7 +2,7 @@
 # Title: Reset the root user password
 # Author: harshiljethava
 # Usage:
-# 1) generate the password hash using below command.
+# 1) generate the password hash using below command. (command works on ubuntu/debian, for redhat and fedora use other utilites)
 # mkpasswd -m sha-512
 #
 # 2) Create the ansible vault to store the generated password hash.It will prompt you to create the password for the vaul
