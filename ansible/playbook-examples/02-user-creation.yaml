@@ -1,4 +1,3 @@
-
 ---
 # Title: User creation example in linux system
 # Author: harshiljethava
@@ -32,3 +31,14 @@
                     generate_ssh_key: yes
                     ssh_key_bits: 1024
                     ssh_key_file: .ssh/id_rsa_ansibleadmin
+          - name: create the user with diff home directory
+            user:
+                    name: ansibleroot
+                    home: /usr/ansibleroot
+                    create_home: yes
+                    expires: 1598745600
+                    password: "$6$mysalt$O5NW5nmarlST2FgG13lSYv6RsuJ8Sx41PAua98RifTnEVUZH.Acdi8t7vb60hyk95i1VkxBFb6zeajpC/51LE1"
+                    shell: /bin/bash
+                    state: present
+                    uid: 3030
+
