@@ -1,7 +1,16 @@
 ---
 # Title: Playbook to send the mail noification
 # Author: harshiljethava
-# - hosts: test
+# Usage:
+#
+#1) create the vault file and save the below parameters using below command
+#   ansible-vault create /etc/ansible/vault/mail-credentials.yaml
+#   vault_smtp: "SMTP-SERVER"
+#   vault_from_mail: "FROM-MAIL-ID"
+#   vault_from_mail_pass: "FROM-MAIL-ID-PASS"
+#   vault_to_mail: "TO-MAIL-ID"
+#2) run the playbook using below command
+# ansible-playbook 05-mail-notification.yaml --ask-vault
 - hosts: localhost
   tasks:
         - name: include vars
