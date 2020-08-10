@@ -1,0 +1,24 @@
+---
+# Title: Playbook to shutdown the specific OS base linux server
+# Author: harshiljethava
+- hosts: test
+  name: Playbook to update the Linux server base on OS distribution
+  become: yes
+  become_user: root
+  tasks:
+           - name: "Updating CentOS"
+             command: yum update -y
+             when:
+                    - ansible_facts['distribution'] == "CentOS"
+           - name: "Updating Red Hat"
+             command: yum update -y
+             when:
+                    - ansible_facts['distribution'] == "RedHat"
+           - name: "Updating OracleLinux"
+             command: yum update -y
+             when:
+                    - ansible_facts['distribution'] == "OracleLinux"
+           - name: "Updating Ubuntu"
+             command: apt-get update -y
+             when:
+                    - ansible_facts['distribution'] == "Ubuntu"

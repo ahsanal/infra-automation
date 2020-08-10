@@ -1,0 +1,12 @@
+---
+# Title: Playbook to get the storage details of linux server
+# Author: harshiljethava
+- hosts: test
+  name: Playbook to get the storage details on linux server
+  tasks:
+          - name: Getting the storage details
+            command: df -Th 
+            when:
+                     - ansible_facts['distribution'] == "CentOS"
+            register: df
+          - debug: var=df.stdout_lines

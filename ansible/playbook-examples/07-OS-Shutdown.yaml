@@ -1,0 +1,24 @@
+---
+# Title: Playbook to shutdown the specific OS base linux server
+# Author: harshiljethava
+- hosts: test
+  name: Playbook to shutdown the Linux server base on OS distribution
+  become: yes
+  become_user: root
+  tasks:
+           - name: "Shutting down CentOS"
+             command: /sbin/shutdown -t now
+             when:
+                    - ansible_facts['distribution'] == "CentOS"
+           - name: "Shutting down Red Hat"
+             command: /sbin/shutdown -t now
+             when:
+                    - ansible_facts['distribution'] == "RedHat"
+           - name: "Shutting down OracleLinux"
+             command: /sbin/shutdown -h now
+             when:
+                    - ansible_facts['distribution'] == "OracleLinux"
+           - name: "Shutting down Ubuntu"
+             command: /sbin/shutdown 
+             when:
+                    - ansible_facts['distribution'] == "Ubuntu"
